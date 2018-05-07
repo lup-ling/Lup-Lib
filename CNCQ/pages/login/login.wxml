@@ -1,0 +1,10 @@
+<!--pages/login/login.wxml '-->
+<view class='bgV'> 
+  <view class='mainView'>
+    <view class='erroeM' hidden='{{isHiden}}'>密码输入错误！</view>
+    <input class='writeSerect' maxlength='8' type="number" bindinput='writeSerect'></input>
+    <view class='login'>
+      <text class='loginWord' bindtap='login'>确    认</text>
+    </view>
+  </view>
+</view>

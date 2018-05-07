@@ -1,0 +1,105 @@
+<view class='bg'>
+  <view class='mainView_1'>
+    <view class='full'></view>
+    <view class='classView_1'>
+      <view class='blockView_1'>
+        <view class='title_1'>商品名:</view>
+        <input class='inputView_1' placeholder='{{detailData.title}}' bindblur='finishWrite' data-text='title'></input>
+      </view>
+      <view class='full_1'></view>
+      <view class='blockView_1'>
+        <view class='title_1'>型号:</view>
+        <input class='inputView_1' placeholder='{{detailData.message}}' bindblur='finishWrite' data-text='message'></input>
+      </view>
+      <view class='blockView_1'>
+        <view class='title_1'>所属区:</view>
+        <picker class='pickView' value='{{index1}}' range='{{array}}' range-key="{{'category'}}" bindchange='changeCate'>
+          <view class='picker'>{{array[index1].category}}</view>
+        </picker>
+        <view class='title_1'>所属区:</view>
+        <picker class='pickView' value='{{index2}}' range='{{arrayClass}}' range-key="{{'class'}}" bindchange='changeClass'>
+          <view class='picker'>{{arrayClass[index2].class}}</view>
+        </picker>
+      </view>
+    </view>
+  </view>
+
+  <view class='mainView_2'>
+    <view class='classView_2'>
+      <view class='full'></view>
+      <view class='localView_2'>
+        <view class='headView'>进货信息</view>
+        <view class='blockView_2'>
+          <view class='title_2'>进价/组:</view>
+          <input class='inputView_2' maxlength="6" type="digit" placeholder='{{detailData.buyingPrices}}' bindblur='finishWrite' data-text='buyingPrices'></input>
+        </view>
+        <view class='blockView_2'>
+          <view class='title_2'>数量/组:</view>
+          <input class='inputView_2' maxlength="4" type="digit" placeholder='{{detailData.bNumber}}' bindblur='finishWrite' data-text='bNumber'></input>
+        </view>
+        <view class='blockView_2'>
+          <view class='title_2'>进价/个:</view>
+          <!-- <input class='inputView_2' maxlength="6" type="digit" placeholder='{{detailData.buyingPrice}}' bindblur='finishWrite' data-text='buyingPrice'></input> -->
+          <view class='inputView_2'>{{bPrice}}</view>
+        </view>
+      </view>
+    </view>
+    <view class='classView_2'>
+      <view class='full'></view>
+      <view class='localView_2'>
+        <view class='headView'>批货信息</view>
+        <view class='blockView_2'>
+          <view class='title_2'>批价/组:</view>
+          <input class='inputView_2' maxlength="6" type="digit" placeholder='{{detailData.salePrices}}' bindblur='finishWrite' data-text='salePrices'></input>
+        </view>
+        <view class='blockView_2'>
+          <view class='title_2'>数量/组:</view>
+          <input class='inputView_2' maxlength="4" type="digit" placeholder='{{detailData.sNumber}}' bindblur='finishWrite' data-text='sNumber'></input>
+        </view>
+        <view class='blockView_2'>
+          <view class='title_2'>批价/个:</view>
+          <input class='inputView_2' maxlength="6" type="digit" placeholder='{{detailData.salePrice}}' bindblur='finishWrite' data-text='salePrice'></input>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class='mainView_34'>
+    <view class='full'></view>
+    <view class='classView_34'>
+      <view class='headView'>零售信息</view>
+      <view class='blockView_34'>
+        <view class='title_34'>零售价:</view>
+        <input class='inputView_34' maxlength="6" type="digit" placeholder='{{detailData.retailPrice}}' bindblur='finishWrite' data-text='retailPrice'></input>
+      </view>
+    </view>
+  </view>
+
+  <view class='mainView_34'>
+    <view class='full'></view>
+    <view class='classView_34'>
+      <view class='headView'>其他信息</view>
+      <view class='blockView_34'>
+        <view class='title_34'>购入时间:</view>
+        <picker class='inputView_34' mode='date' value='{{currentTime}}' start="2017-01-01" end="{{currentTime}}" bindchange='changeTime'>
+          <view class="picker">{{time}}</view>
+        </picker>
+      </view>
+      <view class='blockView_34'>
+        <view class='title_34'>进货渠道:</view>
+        <input class='inputView_34' placeholder='{{detailData.merchant}}' bindblur='finishWrite' data-text='merchant'></input>
+      </view>
+      <view class='blockView_34'>
+        <view class='title_34'>联系电话:</view>
+        <input class='inputView_34' placeholder='{{detailData.phone}}' bindblur='finishWrite' data-text='phone'></input>
+      </view>
+    </view>
+  </view>
+  <view class='save' bindtap='save'>
+    <view class='title_5'>保存信息</view>
+  </view>
+  <view class='delete' bindtap='del' hidden='{{isHiden}}'>
+    <view class='title_5'>删除信息</view>
+  </view>
+  <view class='full_full'></view>
+</view>

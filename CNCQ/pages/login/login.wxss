@@ -1,0 +1,52 @@
+/* pages/login/login.wxss */
+.bgV {
+  width: 100%;
+  height: 500px;
+
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+}
+.mainView {
+  height: 290rpx;
+  margin-top: 50%;
+  /* background-color: rebeccapurple; */
+}
+.erroeM {
+  width: 300rpx;
+  height: 40rpx;
+  color: red;
+  font-size: 30rpx;
+}
+.writeSerect {
+  width: 300rpx;
+  height: 80rpx;
+  background-color: #F3F3F3;
+  
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  border-radius: 6px;
+}
+
+.login {
+  width: 50%;
+  height: 50rpx;
+  background-color: #DADADA;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 80rpx;
+  margin-left: 25%;
+
+
+  text-align: center;
+  border-radius: 4px;
+}
+
+.loginWord {
+  
+}

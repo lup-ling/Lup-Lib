@@ -1,0 +1,104 @@
+<!--index.wxml-->
+<view class="setView">
+  
+  <view class='leftView'>
+    <view class='listView' bindtap='showList' >
+    <image class='list_icon' mode='aspectFit' src='../../resource/list.png'></image>
+      <view class='class_view' hidden='{{isHidenList}}'>
+        <view class='class_view_one' wx:for='{{cateArray}}' bindtap='turnToOtherClass' data-className='{{item.category}}'>{{item.category}}</view>
+      </view>
+    </view>
+  </view>
+  <view class='middleView'></view>
+  <view class='rightView'>
+    <image class="userinfo_image" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+    <text class="userinfo_nickname">{{userInfo.nickName}}</text>
+  </view>
+</view>
+
+<scroll-view class='scroll_view' scroll-top='{{scrollTop}}' scroll-y style=" height: 100vh;" scroll-into-view='{{toView}}'>
+  <view class='goods_view' wx:for="{{detailArray}}">
+    <!--标题栏  -->
+    <view class='head_view' id='{{item.classID}}' >{{item.class}}</view>
+    <!--商品信息-->
+    <view class='detial_view' wx:for="{{item.goodArray}}" wx:for-item="good" bindtap='clickToDetialView' data-goods='{{good}}'>
+      <text class='title_view'>{{good.title}}</text>
+      <view class='price_view get'>
+        <view class='price_text one'>进价/单:</view>
+        <view class='price_num one'>{{good.buyingPrice}}</view>
+        <view class='price_text two'>进价/组:</view>
+        <view class='price_num two'>{{good.buyingPrices}}</view>
+      </view>
+      <view class='other_view'>
+        <view class='other_view_two'>{{good.message}}</view> 
+        <!--添加 按钮  -->
+        <!-- <view class='addGood_view' bindtap='addToShop' data-good='{{good.good_name}}'>添加</view> -->
+      </view>
+      <view class='price_view sale'>
+        <view class='price_text three'>批价/单:</view>
+        <view class='price_num three'>{{good.salePrice}}</view>
+        <view class='price_text four'>批价/组:</view>
+        <view class='price_num four'>{{good.salePrices}}</view>
+      </view>
+    </view>
+  </view>
+</scroll-view>
+
+<view class='detial_view_detial' hidden='{{isHidenDetial}}'> 
+  <view class='dvd_goods_Name'>
+    <view class='dvd_price_text'>{{detailViewArray.title}}</view>
+  </view>
+  <view class='dvd_goods_Model'>
+
+    <view class='dvd_num_text'>{{detailViewArray.message}}</view>
+  </view>
+  <view class='dvd_good getAll'>
+    <view class='dvd_price_text'>进价/组:{{detailViewArray.buyingPrices}}</view>
+  </view>
+  <view class='dvd_good_num get'>
+    <view class='dvd_price_text'>数量:{{detailViewArray.bNumber}}</view>
+  </view>
+  <view class='dvd_good_One'>
+    <view class='dvd_price_text'>进价/个:{{detailViewArray.buyingPrice}}</view>
+  </view>
+  <view class='dvd_good saleAll'>
+    <view class='dvd_price_text'>批价/组:{{detailViewArray.salePrices}}</view>
+  </view>
+  <view class='dvd_good_num sale'>
+    <view class='dvd_num_text'>数量:{{detailViewArray.sNumber}}</view>
+  </view>
+  <view class='dvd_good_One'>
+    <view class='dvd_price_text'>批价/个:{{detailViewArray.salePrice}}</view>
+  </view>
+  <view class='dvd_good_other retail'>零售价:{{detailViewArray.retailPrice}}</view>
+  <view class='dvd_good_other time'>进货日期:{{detailViewArray.Btime}}</view>
+  <view class='dvd_good_other from'>进货商:{{detailViewArray.merchant}}</view>
+  <view class='dvd_good_other_phone'>联系电话:{{detailViewArray.phone}}</view>
+  <view class='alter' bindtap='alter' data-object='{{detailViewArray.objectID}}'>
+    <image class='addIcon' mode='aspectFit' src='../../resource/alter.png'></image>
+  </view>
+</view>
+
+<!--跳转 按钮  -->
+<view class='kindsOf_view'>
+  <view class='kind_views'>
+    <view class='kind_view' hidden='{{isHiden}}' wx:for='{{detailArray}}' bindtap='turnToHeadView' data-goodId='{{item.classID}}'>
+    <text class='listText_view'>{{item.class}}</text>
+  </view>
+  </view>
+  
+
+  <!--隐藏 按钮  -->
+<view class='hide_view' bindtap='hideOrShow'>
+  <image class='hide_icon' mode='aspectFit' src="{{(!isHiden && isHidenDetial) | !isHidenDetial ? '../../resource/hide.png' : '../../resource/show.png'}}"></image>
+</view>
+</view>
+
+<!--数据修改按钮  -->
+<view class='dataViewButton' bindtap='addData'>
+  <image class='addIcon' mode='aspectFit' src='../../resource/add.png'></image>
+</view>
+
+<view class='refresh' bindtap='refresh'> 
+  <image class='addIcon' mode='aspectFit' src='../../resource/refresh.png'></image>
+</view>
