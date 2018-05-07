@@ -54,12 +54,8 @@ function surplusless (array) {
   }
   return (returnArray)
 }
-
 module.exports.surplusless = surplusless;
 
-function makeJson (listname) {
-  
-}
 //封装数组排重 进阶版
 function surplusless1(array1, name1, name2) {
   //获取分类数组
@@ -99,7 +95,6 @@ function surplusless1(array1, name1, name2) {
 
   return (returnArray)
 }
-
 module.exports.surplusless1 = surplusless1;
 
 function putItemToArray(array1,array2) {
@@ -109,8 +104,16 @@ function putItemToArray(array1,array2) {
   }
   return (obj)
 }
-
 module.exports.putItemToArray = putItemToArray;
+
+function compare(property) {
+  return function (a, b) {
+    var value1 = a[property];
+    var value2 = b[property];
+    return value1 - value2;
+  }
+}
+module.exports.compare = compare;
 
 function by(name, minor) {
   return function (o, p) {
@@ -198,7 +201,7 @@ function myAsyncFunction(listName) {
               
             }
           }
-          classArray.sort(compare('classID'));
+          classArray.sort(compare('class'));
           console.log("sort", classArray)
           //3.获取goodArray数组
           var classArr = [];
