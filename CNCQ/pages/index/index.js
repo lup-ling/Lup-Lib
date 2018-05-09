@@ -14,11 +14,14 @@ Page({
     hasUserInfo: false,
     scrollTop:0,
     cateNum:0,
+    classNum:0,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    toView: '',
-    listName:"",
-    detailArray: [],
+    listName:'',//未开放接口
+    className:'',
+    classLength:0,
     cateArray:[],
+    classArray:[],
+    detailArray: [],
     detailViewArray:[]
   },
 
@@ -58,16 +61,22 @@ Page({
       app.globalData.huobiaoData = huobiaoData;
       console.log("ok")
       this.setData({
-        detailArray: huobiaoData[0].classArray,
         cateArray: categoryArray,
+        classArray: huobiaoData[0].classArray,
+        detailArray: classArray[0].goodArray,
+        className: classArray[0].class,
+        classLength: huobiaoData[0].classArray.length
       })
     }else {
       var that = this;//promise 里不能直接使用this 
       util.myAsyncFunction("huobiao").then(function (resolve) {
         that.setData({
-          detailArray: resolve.huobiaoData[0].classArray,
+          detailArray: resolve.huobiaoData[0].classArray[0].goodArray,
           cateArray: resolve.categoryArray,
+          classArray: resolve.huobiaoData[0].classArray,
+          classLength: resolve.huobiaoData[0].classArray.length
         })
+        console.log("sadasdasdas", this.data.detailArray)
         wx.setStorage({
           key: 'huobiaoData',
           data: resolve.huobiaoData,
@@ -76,14 +85,16 @@ Page({
           key: 'categoryArray',
           data: resolve.categoryArray,
         })
+        wx.setStorage({
+          key: 'classArray',
+          data: resolve.classArray,
+        })
       })
     }
   },
 
   onShow: function () {
-    var array = ["1阿达","2无法","3公司","5如果","4好的","6加油"];
-    array.sort();
-    console.log("sort", array)
+    
   },
 
   //获取用户信息
@@ -126,7 +137,11 @@ Page({
     this.setData({
       detailViewArray:array
     })
-
+  },
+  closeView: function () {
+    this.setData({
+      isHidenDetial: true
+    })
   },
 
   //改变当前页面数据到其他大类的数据
@@ -135,20 +150,34 @@ Page({
     for (var i = 0; i < hArray.length; i++) {
       if (e.currentTarget.dataset.classname == hArray[i].category) {
         this.setData ({
-          detailArray: hArray[i].classArray,
+          detailArray: hArray[i].classArray[0].goodArray,
+          classArray: hArray[i].classArray,
+          className: hArray[i].classArray[0].class,
           scrollTop:0,
           isHidenDetial: true,
-          cateNum:i
+          cateNum:i,
+          classLength: hArray[i].classArray.length
         })
       }
     }
   },
 
-  //跳转到当前页面指定位置
-  turnToHeadView: function (e) {
-    this.setData({
-      toView: e.currentTarget.dataset.goodid,
-    })
+  //改变类分数据
+  changeClass: function (e) {
+    console.log("e", e.currentTarget.dataset.classid)
+    var classID = e.currentTarget.dataset.classid;
+    var array = this.data.classArray;
+    for (var i = 0; i < array.length; i++) {
+      if ( classID == array[i].classID) {
+        this.setData({
+          isHidenDetial: true,
+          classNum:i,
+          detailArray: array[i].goodArray,
+          className: array[i].class,
+          classLength: array.length
+        })
+      }
+    }
   },
   //展开或隐藏右侧跳转按钮栏
   hideOrShow: function () {
@@ -218,15 +247,44 @@ Page({
   refresh:function () {
     var that = this;//promise 里不能直接使用this 
     var num = this.data.cateNum;
+    var numc = this.data.classNum;
     util.myAsyncFunction("huobiao").then(function (resolve) {
       that.setData({
-        isHidenDetial:true,
-        detailArray: resolve.huobiaoData[num].classArray,
+        isHidenDetial: true,
+        detailArray: resolve.huobiaoData[num].classArray[numc].goodArray,
+        cateArray: resolve.categoryArray,
+        classArray: resolve.huobiaoData[num].classArray,
       })
       wx.setStorage({
         key: 'huobiaoData',
         data: resolve.huobiaoData,
       })
+      wx.setStorage({
+        key: 'classArray',
+        data: resolve.classArray,
+      })
     })
-  }
+  },
+  up:function () {
+    var numc = this.data.classNum;
+    if (numc !== 0 && numc > 0) {
+      var numcl = this.data.classNum - 1;
+      this.setData({
+        classNum: numcl,
+        detailArray: this.data.classArray[numcl].goodArray,
+        className: this.data.classArray[numcl].class
+      })
+    }
+  },
+  down: function () {
+    var numc = this.data.classNum;
+    if (numc < (this.data.classLength - 1)) {
+      var numcl = this.data.classNum + 1;
+      this.setData({
+        classNum: numcl,
+        detailArray: this.data.classArray[numcl].goodArray,
+        className: this.data.classArray[numcl].class
+      })
+    }
+  },
 })

@@ -54,21 +54,19 @@ function surplusless (array) {
   }
   return (returnArray)
 }
-module.exports.surplusless = surplusless;
+// module.exports.surplusless = surplusless;
 
 //封装数组排重 进阶版
 function surplusless1(array1, name1, name2) {
   //获取分类数组
   var getArray = [];
   var array = [];
-
   for (var i = 0; i < array1.length; i++) {
     var obj = {};
     obj["a"] = array1[i].a;
     obj["b"] = array1[i].b;
     getArray.push(obj)
   }
-
   for (var i = 0; i < getArray.length; i++) {
     var item = getArray[i].b;
     var num = 0;
@@ -92,7 +90,6 @@ function surplusless1(array1, name1, name2) {
       obj[name2] = array[z].b;
       returnArray.push(obj);
   }
-
   return (returnArray)
 }
 module.exports.surplusless1 = surplusless1;
@@ -114,6 +111,27 @@ function compare(property) {
   }
 }
 module.exports.compare = compare;
+
+var by1 = function (name) {
+  return function (o, p) {
+    var a, b;
+    if (typeof o === "object" && typeof p === "object" && o && p) {
+      a = o[name];
+      b = p[name];
+      if (a === b) {
+        return 0;
+      }
+      if (typeof a === typeof b) {
+        return a < b ? -1 : 1;
+      }
+      return typeof a < typeof b ? -1 : 1;
+    }
+    else {
+      throw ("error");
+    }
+  }
+}
+module.exports.by1 = by1;
 
 function by(name, minor) {
   return function (o, p) {
@@ -141,23 +159,6 @@ function by(name, minor) {
   }
 }
 module.exports.by = by;
-
-//单列数据排序
-
-// function getArray(listName) {
-  
-//   objec["finish"] = false;
-//   var list = Bmob.Object.extend(listName);
-//   var query = new Bmob.Query(list);
-//   query.limit(1000);
-//   query.find({
-//     success: function (res) {
-      
-//       return (objec)
-//     }
-//   })
-// }
-// module.exports.getArray = getArray;
 
 function myAsyncFunction(listName) {
   return new Promise((resolve, reject) => {
@@ -198,11 +199,10 @@ function myAsyncFunction(listName) {
               objC["b"] = resArray[j].class;
               array2.push(objC);
               classArray = surplusless1(array2, 'classID', 'class');
-              
             }
           }
-          classArray.sort(compare('class'));
-          console.log("sort", classArray)
+          classArray.sort(by1('classID'));
+          // console.log("sort", classArray)
           //3.获取goodArray数组
           var classArr = [];
           for (var m = 0; m < classArray.length; m++) {
@@ -229,10 +229,10 @@ function myAsyncFunction(listName) {
         var app = getApp();
         app.globalData.huobiaoData = huobiaoData;
 
-        // console.log("huobiao", huobiaoData)
+        console.log("huobiao", huobiaoData)
         objec["huobiaoData"] = huobiaoData;
         objec["categoryArray"] = categoryArray;
-        objec["classArray"] = classArray;
+        objec["classArray"] = huobiaoData[0].classArray;
         resolve(objec)
       }
     })

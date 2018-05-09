@@ -72,11 +72,12 @@ Page({
         arrayClass: app.globalData.huobiaoData[0].classArray,
       })
       
-      this.data.goodMessage["cateID"] = "a_xh";
-      this.data.goodMessage["category"] = "洗化";
-      this.data.goodMessage["classID"] = "xifa";
-      this.data.goodMessage["class"] = "洗发";
+      this.data.goodMessage["cateID"] = app.globalData.huobiaoData[0].cateID;
+      this.data.goodMessage["category"] = app.globalData.huobiaoData[0].category;
+      this.data.goodMessage["classID"] = app.globalData.huobiaoData[0].classArray[0].classID;
+      this.data.goodMessage["class"] = app.globalData.huobiaoData[0].classArray[0].class;
       this.data.goodMessage["Btime"] = date1;
+      console.log("log", this.data.goodMessage.classID,this.data.goodMessage.class)
     }
     
   },
@@ -92,8 +93,8 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    console.log("hide1", this.data.isHiden)
-    console.log("alter1", app.globalData.isAlter)
+    // console.log("hide1", this.data.isHiden)
+    // console.log("alter1", app.globalData.isAlter)
     if (this.data.isHiden) {
       if (app.globalData.isAlter) {
         this.setData({
@@ -231,7 +232,9 @@ Page({
           app.globalData.isAlter = false;
           console.log("alter")
           result.save();
-          
+          wx.navigateBack({
+            delta: 2
+          })
         },
         error: function (object, error) {
           console.log("error")

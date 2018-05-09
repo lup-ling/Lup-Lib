@@ -145,7 +145,7 @@
 /* --------- 保存按钮 删除按钮--------  */
 .save {
   width: 30%;
-  height: 4vh;
+  height: 5vh;
 
   display: flex;
   flex-direction: row;
@@ -157,7 +157,7 @@
 }
 .delete {
   width: 30%;
-  height: 4vh;
+  height: 5vh;
 
   display: flex;
   flex-direction: row;
@@ -167,6 +167,7 @@
   background-color: red;
 }
 .title_5 {
+  margin-top: 5rpx;
   color: black;
 }
 .full_full {
