@@ -11,7 +11,7 @@
   <view class='middleView'>{{className}}</view>
   <view class='rightView'>
     <!-- <image class="userinfo_image" src="{{userInfo.avatarUrl}}" background-size="cover"></image> -->
-    <text class="userinfo_nickname">{{userInfo.nickName}}</text>
+    <!-- <text class="userinfo_nickname">{{userInfo.nickName}}</text> -->
   </view>
 </view>
 
