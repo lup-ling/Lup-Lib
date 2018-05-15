@@ -9,8 +9,9 @@
   width: 100%;
   height: 5%;
   top: 0px; 
-  z-index: 4; 
-  background-color: #FFE754;
+  z-index: 6; 
+  background-color: #9DDDFC;
+  /*  FBDA11*/
   opacity: 0.9;
 }
 /*     顶部view 左部分   */
@@ -22,8 +23,14 @@
 .middleView {
   width: 34%;
   height: 100%;
-  
+
+  font-size: 35rpx;
   text-align: center;
+
+  /* background-color: rebeccapurple;   */
+}
+.middle_text {
+
 }
 /*     顶部view 右部分   */
 .rightView {
@@ -32,7 +39,7 @@
 
   display: flex;
   flex-direction: row-reverse;
-  margin-right: 10rpx;
+  margin-right: 0rpx;
   align-items: center;
 }
 /*     顶部view 左部分 列表按钮   */
@@ -43,38 +50,70 @@
 /*     顶部view 左部分 列表按钮→列表  */
 .class_view {
   width: 30%;
-  height: 60px;
-
+  height: 100%;
+  
   position: absolute;
-  top: 30px;
+  top: 100%;
 }
 .list_icon {
   width: 80%;
-  height: 30px;
-  
+  height: 100%;
+   /* background-color: #E4E4E4;  */
 }
 .class_view_one {
   width: 100%;
-  height: 30px;
+  height: 60rpx;
 
-  border-bottom: 2px solid gainsboro;
-  background-color: gold;
+  font-size: 35rpx;
+  text-align: center;
+
+  display: flex;
+  flex-direction: column;
+
+  border-top: 2px dashed gainsboro;
+
+  background-color: #9DDDFC;
+}
+.classView_text {
+  height: 40rpx;
+  margin-top: 8rpx; 
+
+  /* background-color: ghostwhite;  */
 }
 /*     顶部view 右部分 用户头像   */
-.userinfo_image {
+.setView {
   width: 30px;
   height: 30px;
   
   margin: 20rpx;
+
   border-radius: 50%;
+  /* background-color: red; */
 }
-/*     顶部view 右部分 用户昵称   */
-.userinfo_nickname {
-  font-size: 13px;
-  color: #aaa;
+.set_image {
+  width: 48rpx;
+  height: 48rpx;
+
+  margin-top: 3rpx;
+  margin-right: 0%;
 }
+.needView {
+  width: 55rpx;
+  height: 55rpx;
+  
+  margin: 20rpx;
 
+  border-radius: 50%;
 
+  /* background-color: red; */
+}
+.set_image_1 {
+  width: 55rpx;
+  height: 55rpx;
+
+  margin-top: 5rpx;
+  margin-right: 0%;
+}
 /*----------主框架滚动view框架----------*/
 .scrollView {
   width: 100%;
@@ -82,16 +121,24 @@
   position: fixed;
   top:60rpx;
   /* margin-top: 60rpx; */
-  background-color: #ECECEC;
+  background-color: #F5F5F5;
 }
 .itemView {
-  width: 100%;
-  height: 15%; 
+  width: 96%;
+  /* height: 15%; */
 
   display: flex;
   flex-direction: row;
+
   margin-bottom: 10rpx;
-  background-color: white; 
+  margin-left: 2%;
+  margin-top: 3%;
+
+  border-radius: 15rpx;
+  border: 2rpx solid #E4E4E4;
+
+  background-color: #FFFBE6; 
+  /* //FFFBE6 D6F9A5*/
 }
 .full {
   width: 5%;
@@ -109,7 +156,7 @@
   flex-wrap: wrap;
 }
 .title {
-  width:40%;
+  /* width:40%; */
   height: 95%;
   font-size: 40rpx;
   /* background-color: tan; */
@@ -119,13 +166,14 @@
   height: 95%;
   font-size: 32rpx;
   margin-top: 10rpx;
+  margin-left: 20rpx;
   color: gray;
   /* background-color: teal; */
 }
 .full_1 {
   width: 95%;
   height: 3rpx;
-  background-color: gray;
+  background-color: #C5C5C5;
 }
 .name {
   width: 148rpx;
@@ -156,6 +204,10 @@
   margin-right: 10%;
   /* 文本居中 */
   /* text-align: center; */
+}
+.full_f {
+  width: 100%;
+  height: 10rpx;
 }
 
 /*     添加入结算按钮   */
@@ -191,8 +243,8 @@
   flex-direction: row;
   
   border-radius: 20rpx;
-  border:3rpx solid #c9c9c9;
-  background-color: #F5F5F5;
+  border:3rpx solid #FDD918;
+  background-color: #9DDDFC;/*#F5F5F5*/
 }
 
 .classView {
@@ -208,7 +260,7 @@
   flex-wrap: wrap;
 }
 .title_1 {
-  width: 40%;
+  /* width: 40%; */
   height: 90%;
   font-size: 45rpx;
 
@@ -216,11 +268,12 @@
   /* background-color: red;  */
 }
 .message_1 {
-  width: 60%;
+  /* width: 60%; */
   height: 90%;
   font-size: 38rpx;
   color: gray;
   margin-top: 8rpx;
+  margin-left: 20rpx;
   /* background-color: red; */
 }
 .name_1 {
@@ -244,19 +297,34 @@
 
   margin-top: 15rpx;
 }
+ .full_1_2 {
+  width: 95%;
+  height: 3rpx;
+  border-bottom: 3rpx dashed #FD980B;
+  /* background-color: #C5C5C5; */
+} 
 .full_1_1 {
   width: 100%;
   height: 10rpx;
 }
 .alter {
-  width: 100%;
-  height: 60rpx;
+  width: 20%;
+  height: 120rpx;
 
   position: absolute;
-  right: -40%;
-  top: 80%;
+  right: 0%;
+  top: 78%;
+
+  /* background-color: red;  */
 }
-/*     右侧快速跳转主框架view   */
+.addIcon_alter {
+  width: 60rpx;
+  height: 60rpx;
+
+  margin-top: 10%;
+  margin-left: 10%;
+}
+/*----------右侧快速跳转主框架view----------*/
 .kindsOf_view {
   position: fixed;
   display: flex;
@@ -269,50 +337,50 @@
   bottom: 25%;
   right: 5%;
 
-   /* background-color: burlywood;  */
+    /* background-color: burlywood;   */
 }
-/*     按钮类框架view   */
+/*  按钮类框架view  */
 .kind_views {
   width: 6rem;
-  height: 18rem;
+  height: 17.8rem;
 
   display: flex;
   flex-direction: column;
   flex-wrap: wrap-reverse;
   /* align-content: space-around; */
 
-   /* background-color: red;  */
+  /* background-color: red;    */
 }
-/*----------类名跳转view----------*/
+/* 类名跳转view */
 .kind_view {
   width: 2.2rem;
+  height: 88rpx;
+
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  align-content: center;
+  justify-content: center;
 
-  margin-bottom: 20rpx; 
+  margin-bottom: 18rpx; 
   margin-right: 0rpx;
   margin-left: 20rpx; 
 
-  
-  border-radius: 5px;
-}
-/*     类名跳转按钮   */
-.listText_view {
-  width: 2.2rem;
-  height: 100%;
-  color: black;
-  
+  opacity: 0.9;
+
+  border: 2rpx solid #9DDDFC;
   border-radius: 5px;
 
-  opacity: 0.9;
-  background-color: gold;
+  background-color: white;
 }
-.listText_view text{
-  width: 50%;
+/*    类名跳转按钮   */
+.kd_view {
+  width: 2rem;
+  color: black;
   opacity: 1;
-  font-size: 14px;
+  font-size: 30rpx;
+  text-align: center;
+  border-radius: 5px;
+  /* background-color: white;    */
 }
 /*     隐藏按钮   */
  .hide_view {
@@ -324,7 +392,7 @@
   right: 5%; */
   border-radius: 5px;
   opacity: 1;
-  background-color: gold;
+  /* background-color: gold; */
 } 
 .hide_icon {
   width: 100%;
@@ -343,11 +411,11 @@
 
   opacity: 0.9;
 
-  background-color: gold;
+  /* background-color: gold; */
 }
 .addIcon {
-  width: 100%;
-  height: 100%;
+  width: 2.2rem;
+  height: 2.2rem;
   opacity: 1;
 }
 .refresh {
@@ -362,33 +430,40 @@
 
   opacity: 0.9;
 
-  background-color: gold;
+  /* background-color: gold; */
+}
+.addIcon_re {
+  width: 80%;
+  height: 80%;
+
+  margin-left: 10%;
+  margin-top: 10%;
 }
 .upView {
   position: fixed;
-  bottom: 25%;
+  bottom: 28%;
   left: 5%;
 
-  width: 2.2rem;
-  height: 2.2rem;
+  width: 3rem;
+  height: 3rem;
   
   border-radius: 5px;
 
   /* opacity: 0.9; */
 
-  /* background-color: gold; */
+   /* background-color: gold;  */
 }
 .downView {
   position: fixed;
   bottom: 15%;
   left: 5%;
 
-  width: 2.2rem;
-  height: 2.2rem;
+  width: 3rem;
+  height: 3rem;
   
   border-radius: 5px;
 
   /* opacity: 0.9; */
 
-  /* background-color: gold; */
+  /* background-color: gold;  */
 }

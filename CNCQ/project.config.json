@@ -58,6 +58,18 @@
 					"name": "login",
 					"pathName": "pages/login/login",
 					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "set",
+					"pathName": "pages/set/set",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "need",
+					"pathName": "pages/need/need",
+					"query": ""
 				}
 			]
 		}

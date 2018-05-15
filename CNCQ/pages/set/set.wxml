@@ -1,0 +1,12 @@
+<!--pages/set/set.wxml-->
+<view class='setView'>
+  <view class='name'>登陆:</view>
+  <input class='write' type='number' placeholder='请输入权限密码' maxlength='8' bindblur='writePassWord'></input>
+  <view class='enter'>确认</view>
+</view>
+<!-- 
+<view class='setView'>
+  <view class='name'>登陆:</view>
+  <input class='write' type='number' placeholder='请输入权限密码' maxlength='8' bindblur='writePassWord'></input>
+  <view class='enter'>确认</view>
+</view> -->

@@ -1,0 +1,153 @@
+/* pages/need/need.wxss */
+.bg {
+  width: 100vw;
+  height: 100vh;
+  background-color: #F5F5F5;
+}
+.listView {
+  width: 100vw;
+  height: 100%;
+  background-color: #F5F5F5;
+}
+.title_top {
+  position: fixed;
+  top: 0px; 
+  z-index: 5;
+
+  width: 100%;
+  height: 5%;
+  
+  opacity: 0.9;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  background-color: #9DDDFC;
+}
+.top_text {
+  /* height: 41rpx; */
+
+  text-align: center;
+  font-size: 35rpx;
+
+  /* background-color: rosybrown; */
+}
+.full_t {
+  width: 100%;
+  height: 6vh;
+}
+.needView {
+  width: 94%;
+  /* height: 100%; */
+
+  display:flex;
+  flex-direction: row;
+
+  margin-left: 3%;
+  margin-bottom: 2%;
+
+  border: 2rpx solid red;
+  border-radius: 20rpx;
+
+  background-color: #FFFBE6;
+}
+.full {
+  width: 5%;
+  height: 100%;
+}
+.classView {
+  width: 95%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+}
+.blockView {
+  width: 100%;
+  height: 60rpx;
+
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  flex-wrap: wrap;
+}
+.blockView_1 {
+  width: 100%;
+  height: 45rpx;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: center;
+
+  font-size: 30rpx;
+}
+.full_1 {
+  width: 100%;
+  height: 10rpx;
+}
+.full_1_1 {
+  width: 90%;
+  height: 2rpx;
+  background-color: gray;
+}
+.title {
+  font-size: 43rpx;
+  
+}
+.message {
+  /* width: 65%; */
+  margin-left: 20rpx;
+  margin-top: 13rpx;
+  color: gray;
+}
+.class {
+  position: absolute;
+  margin-left: 63%;
+  margin-top: 10rpx;
+
+  border-radius: 25rpx;
+
+  font-size: 30rpx;
+
+  color: #0075EC;
+  background-color: gold;
+}
+.price {
+  width: 25%;
+
+  /* text-align: center; */
+
+  margin-top: 8rpx;
+}
+.text {
+  width: 25%;
+
+  margin-top: 8rpx;
+}
+.thing {
+  margin-top: 8rpx;
+}
+.refresh {
+  position: fixed;
+  bottom: 15%;
+  right: 5%;
+
+  width: 2.2rem;
+  height: 2.2rem;
+  
+  border-radius: 5px;
+
+  opacity: 0.9;
+
+  /* background-color: gold; */
+}
+.addIcon_re {
+  width: 80%;
+  height: 80%;
+
+  margin-left: 10%;
+  margin-top: 10%;
+}

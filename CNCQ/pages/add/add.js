@@ -20,7 +20,8 @@ Page({
     bPrice:"",
     time:"",
     goodMessage: {},
-    isHiden:true //删除按钮默认隐藏
+    isHiden:true, //删除按钮默认隐藏,
+    isHidenAdd:true//默认隐藏添加分类分区按钮
 },
 
   /**
@@ -32,7 +33,7 @@ Page({
     })
     // console.log("array",this.data.array)
     var isAlter = app.globalData.isAlter;
-    
+    // console.log("add", this.data.isHidenAdd)
     if (isAlter) {//isAlter=true 进入修改模式
       this.setData({
         detailData: app.globalData.detailData,
@@ -55,7 +56,7 @@ Page({
                 index2: j,
                 arrayClass: array1
               })
-              console.log("array1", this.data.index2)
+              // console.log("array1", this.data.index2)
               break;
             }
           }
@@ -64,20 +65,21 @@ Page({
     } else {//isAlter=false 进入添加模式
       var date = util.formatTime(new Date());
       var date1 = date.substring(0, 10);
-      console.log(date1)
+      // console.log(date1)
       this.setData({
         array: app.globalData.huobiaoData,
         currentTime: date1,
         time: date1,
         arrayClass: app.globalData.huobiaoData[0].classArray,
+        isHidenAdd:false
       })
-      
+      console.log("add", this.data.isHidenAdd)
       this.data.goodMessage["cateID"] = app.globalData.huobiaoData[0].cateID;
       this.data.goodMessage["category"] = app.globalData.huobiaoData[0].category;
       this.data.goodMessage["classID"] = app.globalData.huobiaoData[0].classArray[0].classID;
       this.data.goodMessage["class"] = app.globalData.huobiaoData[0].classArray[0].class;
       this.data.goodMessage["Btime"] = date1;
-      console.log("log", this.data.goodMessage.classID,this.data.goodMessage.class)
+      // console.log("log", this.data.goodMessage.classID,this.data.goodMessage.class)
     }
     
   },
@@ -149,7 +151,9 @@ Page({
   finishWrite: function (w) {
     var key = w.currentTarget.dataset.text;
     var value = w.detail.value;
-    this.data.goodMessage[key] = value;
+    if (value.length > 0) {
+      this.data.goodMessage[key] = value;
+    }
     if (this.data.goodMessage.buyingPrices > 0 && this.data.goodMessage.bNumber > 0) {
       var price = (this.data.goodMessage.buyingPrices / this.data.goodMessage.bNumber).toFixed(2);
       String(price)

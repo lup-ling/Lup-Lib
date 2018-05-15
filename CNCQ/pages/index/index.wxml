@@ -4,19 +4,27 @@
     <view class='listView' bindtap='showList' >
     <image class='list_icon' mode='aspectFit' src='../../resource/list.png'></image>
       <view class='class_view' hidden='{{isHidenList}}'>
-        <view class='class_view_one' wx:for='{{cateArray}}' bindtap='turnToOtherClass' data-className='{{item.category}}'>{{item.category}}</view>
+        <view class='class_view_one' wx:for='{{cateArray}}' bindtap='turnToOtherClass' data-className='{{item.category}}'>
+          <view class='classView_text'>{{item.category}}</view>
+        </view>
       </view>
     </view>
   </view>
-  <view class='middleView'>{{className}}</view>
+  <view class='middleView'>
+    <view class='middle_text'>{{className}}</view>
+  </view>
   <view class='rightView'>
-    <!-- <image class="userinfo_image" src="{{userInfo.avatarUrl}}" background-size="cover"></image> -->
-    <!-- <text class="userinfo_nickname">{{userInfo.nickName}}</text> -->
+    <view class='setView' bindtap='tapToSet'>
+      <image class="set_image_1" src='../../resource/set.png'></image>
+    </view>
+    <view class='needView' bindtap='tapToNeed' hidden='{{isHidenPrice}}'>
+      <image class="set_image" src='../../resource/need.png'></image>
+    </view>
   </view>
 </view>
 
 <scroll-view class='scrollView' scroll-top='{{scrollTop}}' scroll-y style=" height: 95vh;">
-  <view class='itemView' wx:for='{{detailArray}}' wx:for-item="good" bindtap='clickToDetialView' data-goods='{{good}}'>
+  <view class='itemView' wx:for='{{detailArray}}' wx:for-item="good" bindtap='clickToDetialView' data-goods='{{good}}' data-class='{{className}}' bindtouchstart='moveS' bindtouchmove='moveM' bindtouchend='moveE' data-index='{{index}}'>
     <view class='full'></view>
     <view class='box'>
       <view class='blockView'>
@@ -24,16 +32,17 @@
         <view class='message'>{{good.message}}</view>
         <view class='full_1'></view>
       </view>
-      <view class='blockView'>
-        <view class='name'>进价-单:</view>
-        <view class='price'>{{good.buyingPrice}}</view>
+      <view class='blockView' hidden='{{isHidenPrice}}'>
+        <view class='name' style='color:red'>进价-单:</view>
+        <view class='price' style='color:red'>{{good.buyingPrice}}</view>
         <view class='name'>批发-单:</view>
-        <view class='price'>{{good.salePrice}}</view>
+        <view class='price' >{{good.salePrice}}</view>
       </view>
       <view class='blockView'>
         <view class='name'>零售价:</view>
         <view class='price'>{{good.retailPrice}}</view>
       </view>
+      <view class='full_f'></view>
     </view>
   </view>
 </scroll-view>
@@ -44,8 +53,8 @@
     <view class='full_1_1'></view>
     <view class='blockView_1'>
       <view class='title_1'>{{detailViewArray.title}}</view>
-      <view class='message_1'>{{detailViewArray.message}}</view>
-      <view class='full_1'></view>
+      <view class='message_1' style='color:#FD980B'>{{detailViewArray.message}}</view>
+      <view class='full_1_2'></view>
     </view>
     <view class='blockView_1'>
       <view class='name_1'>进价</view>
@@ -53,7 +62,7 @@
     <view class='blockView_1'>
       <view class='price_1'>{{detailViewArray.buyingPrices}}</view>
       <view class='price_1'>{{detailViewArray.bNumber}}</view>
-      <view class='price_1'>{{detailViewArray.buyingPrice}}</view>
+      <view class='price_1' style='color:red'>{{detailViewArray.buyingPrice}}</view>
     </view>
     <view class='blockView_1'>
       <view class='name_1'>批发价</view>
@@ -62,7 +71,7 @@
       <view class='price_1'>{{detailViewArray.salePrices}}</view>
       <view class='price_1'>{{detailViewArray.sNumber}}</view>
       <view class='price_1'>{{detailViewArray.salePrice}}</view>
-      <view class='full_1'></view>
+      <view class='full_1_2'></view>
     </view>
     <view class='blockView_1'>
       <view class='name_1'>零售价</view>
@@ -83,7 +92,7 @@
     <view class='full_1_1'></view>
   </view>
   <view class='alter' bindtap='alter' data-object='{{detailViewArray.objectID}}'>
-    <image class='addIcon' mode='aspectFit' src='../../resource/alter.png'></image>
+    <image class='addIcon_alter' mode='aspectFit' src='../../resource/alter.png'></image>
   </view>
 </view>
 
@@ -91,24 +100,22 @@
 <view class='kindsOf_view'>
   <view class='kind_views'>
     <view class='kind_view' hidden='{{isHiden}}' wx:for='{{classArray}}' bindtap='changeClass' data-classId='{{item.classID}}'>
-    <text class='listText_view'>{{item.class}}</text>
+      <text class='kd_view'>{{item.class}}</text>
+    </view>
   </view>
-  </view>
-  
-
   <!--隐藏 按钮  -->
-<view class='hide_view' bindtap='hideOrShow'>
-  <image class='hide_icon' mode='aspectFit' src="{{(!isHiden && isHidenDetial) | !isHidenDetial ? '../../resource/hide.png' : '../../resource/show.png'}}"></image>
-</view>
+  <view class='hide_view' bindtap='hideOrShow'>
+    <image class='hide_icon' mode='aspectFit' src="{{(!isHiden && isHidenDetial) | !isHidenDetial ? '../../resource/hide.png' : '../../resource/show.png'}}"></image>
+  </view>
 </view>
 
 <!--数据修改按钮  -->
-<view class='dataViewButton' bindtap='addData'>
+<view class='dataViewButton' hidden='{{isHidenPrice}}' bindtap='addData'>
   <image class='addIcon' mode='aspectFit' src='../../resource/add.png'></image>
 </view>
 
 <view class='refresh' bindtap='refresh'> 
-  <image class='addIcon' mode='aspectFit' src='../../resource/refresh.png'></image>
+  <image class='addIcon_re' mode='aspectFit' src='../../resource/refresh.png'></image>
 </view>
 
 <view class='upView' bindtap='up'> 

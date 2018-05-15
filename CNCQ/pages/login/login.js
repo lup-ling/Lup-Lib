@@ -10,21 +10,36 @@ Page({
    */
   data: {
     serectNum:0,
-    isHiden:true
+    isHiden:true,
+    array:[]
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    var that = this;
     var serect = wx.getStorageSync("serect")
-    if ( serect == 20090921) {
-      wx.redirectTo({
-        url: '../index/index',
-      })
-      console.log("登陆成功")
-    }
-
+    var list = Bmob.Object.extend("passNumbers")
+    var query = new Bmob.Query(list)
+    query.find({
+      success: function (res) {
+        var array1 = [];
+        for(var i = 0; i < res.length; i++) {
+          array1.push(res[i].attributes.passNumber)
+          if (serect == res[i].attributes.passNumber) {
+            wx.redirectTo({
+              url: '../index/index',
+            })
+            console.log("登陆成功")
+          }
+        }
+        that.setData({
+          array:array1
+        })
+        console.log("login", that.data.array);
+      }
+    })
   },
 
   /**
@@ -86,22 +101,26 @@ Page({
    * 用户点击确认密码登陆
    */
   login:function () {
-    console.log("login", this.data.serectNum);
-    if (this.data.serectNum == 20090921) {
-      this.setData({
-        isHiden:true
-      })
-      wx.setStorage({
-        key: 'serect',
-        data: this.data.serectNum
-      });
-      wx.redirectTo({
-        url: '../index/index',
-      })
-    }else {
-      this.setData ({
-        isHiden: false
-      })
+    console.log("login", this.data.array);
+    var array = this.data.array;
+    for (var i = 0; i < array.length; i++) {
+      if (this.data.serectNum == array[i]) {
+        this.setData({
+          isHiden: true
+        })
+        wx.setStorage({
+          key: 'serect',
+          data: this.data.serectNum
+        });
+        wx.redirectTo({
+          url: '../index/index',
+        })
+      } else {
+        this.setData({
+          isHiden: false
+        })
+      }
     }
   }
+
 })

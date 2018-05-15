@@ -40,6 +40,8 @@ App({
     userInfo: null,
     huobiaoData:[],
     detailData:{},
-    "num": 1,
+    needArray:[],
+    num: 1,
+    screct:0
   },
 })

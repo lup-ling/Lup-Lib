@@ -1,0 +1,45 @@
+<!--pages/need/need.wxml-->
+<view class='bg'>
+  <view class='listView'>
+    <view class='title_top'>
+      <view class='top_text'>缺货列表</view>
+    </view>
+    <view class='full_t'></view>
+    <view class='needView' wx:for='{{needArray}}' bindtouchstart='moveS1' bindtouchmove='moveM1' bindtouchend='moveE1' data-index='{{index}}' data-id='{{item.id}}'>
+      <view class='full'></view>
+      <view class='classView'>
+        <view class='blockView'>
+          <view class='full_1'></view>
+          <view class='title'>{{item.title}}</view>
+          <view class='message'>{{item.message}}</view>
+          <view class='class'>-{{item.class}}-</view>
+          <view class='full_1_1'></view>
+        </view>
+        <view class='blockView_1'>
+          <view class='text'>进价：</view>
+          <view class='price' style='color:red'>{{item.buyingPrices}}</view>
+          <view class='price'>{{item.bNumber}}</view>
+          <view class='price'>{{item.buyingPrice}}</view>
+        </view>
+        <view class='blockView_1'>
+          <view class='text'>渠道：</view>
+          <view class='thing'>{{item.merchant}}</view>
+        </view>
+        <view class='blockView_1'>
+          <view class='text'>进货日期：</view>
+          <view class='thing'>{{item.Btime}}</view>
+        </view>
+        <view class='blockView_1'>
+          <view class='text'>电话：</view>
+          <view class='thing'>{{item.phone}}</view>
+        </view>
+        <view class='full_1'></view>
+      </view>
+    </view>
+  </view>
+</view>
+
+
+<view class='refresh' bindtap='refresh_needArray'> 
+  <image class='addIcon_re' mode='aspectFit' src='../../resource/refresh.png'></image>
+</view>

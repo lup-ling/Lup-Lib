@@ -8,17 +8,21 @@ var util = require('../../utils/util.js');
 Page({
   data: {
     userInfo: {},
-    isHiden:false,
-    isHidenList:true,
-    isHidenDetial:true,
+    isHiden:false,//右侧跳转按钮显示
+    isHidenList:true,//左上角分类列表隐藏
+    isHidenDetial: true,//详情列表隐藏
+    isHidenPrice: true, //售价行隐藏
     hasUserInfo: false,
     scrollTop:0,
+    startX:0,
+    startY: 0,
     cateNum:0,
     classNum:0,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     listName:'',//未开放接口
     className:'',
     classLength:0,
+    needArray:[],
     cateArray:[],
     classArray:[],
     detailArray: [],
@@ -26,33 +30,6 @@ Page({
   },
 
   onLoad: function () {    
-    // if (app.globalData.userInfo) {
-    //   this.setData({
-    //     userInfo: app.globalData.userInfo,
-    //     hasUserInfo: true
-    //   })
-    // } else if (this.data.canIUse){
-    //   // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-    //   // 所以此处加入 callback 以防止这种情况
-    //   app.userInfoReadyCallback = res => {
-    //     this.setData({
-    //       userInfo: res.userInfo,
-    //       hasUserInfo: true
-    //     })
-    //   }
-    // } else {
-    //   // 在没有 open-type=getUserInfo 版本的兼容处理
-    //   wx.getUserInfo({
-    //     success: res => {
-    //       app.globalData.userInfo = res.userInfo
-    //       this.setData({
-    //         userInfo: res.userInfo,
-    //         hasUserInfo: true
-    //       })
-    //     }
-    //   })
-    // }
-
     var huobiaoData = wx.getStorageSync('huobiaoData');
     var categoryArray = wx.getStorageSync('categoryArray');
     var classArray = wx.getStorageSync('classArray');
@@ -74,6 +51,7 @@ Page({
           detailArray: resolve.huobiaoData[0].classArray[0].goodArray,
           cateArray: resolve.categoryArray,
           classArray: resolve.huobiaoData[0].classArray,
+          className: resolve.huobiaoData[0].classArray[0].class,
           classLength: resolve.huobiaoData[0].classArray.length
         })
         wx.setStorage({
@@ -93,17 +71,19 @@ Page({
   },
 
   onShow: function () {
+    var num = wx.getStorageSync("authorityNum")
+    if (app.globalData.screct > 0 ) {
+      this.setData({
+        isHidenPrice: false
+      })
+    }else {
+      if ( num == 200909) {
+        this.setData({
+          isHidenPrice: false
+        })
+      }
+    }
     
-  },
-
-  //获取用户信息
-  getUserInfo: function (e) {
-    console.log(e)
-    app.globalData.userInfo = e.detail.userInfo
-    this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true
-    })
   },
 
   //展开分类列表
@@ -120,23 +100,190 @@ Page({
     }
   },
 
+  //手指刚放到屏幕触发
+  moveS: function (e) {
+    if (!this.data.isHidenPrice) {
+      //判断是否只有一个触摸点
+      if (e.touches.length == 1) {
+        this.setData({
+          //记录触摸起始位置的X坐标
+          startX: e.touches[0].clientX,
+          startY: e.touches[0].clientY
+        });
+      }
+    }
+  },
+
+  moveE: function (e) {
+    if (!this.data.isHidenPrice) {
+      var that = this
+      if (e.changedTouches.length == 1) {
+        //手指移动结束后触摸点位置的X坐标
+        var endX = e.changedTouches[0].clientX;
+        var endY = e.changedTouches[0].clientY;
+        //触摸开始与结束，手指移动的距离
+        var disX = that.data.startX - endX;
+        var disY = (that.data.startY - endY) > 0 ? (that.data.startY - endY) : (endY - that.data.startX);
+        var r = 360 * Math.atan(disY / disX) / (2 * Math.PI);
+        var r1 = r.toFixed(2);
+        console.log("jiaodu", r1)
+        if (r1 < 45 && disX > 0) {
+          //添加动画效果
+
+          //传入数据
+          var good = e.currentTarget.dataset.goods;
+          console.log("class", e.currentTarget.dataset.class);
+          good["class"] = e.currentTarget.dataset.class;
+          good["isHiden"] = true;
+          delete good.category;
+          delete good.objectID;
+          delete good.retailPrice;
+          delete good.sNumber;
+          delete good.salePrice;
+          delete good.salePrices;
+          console.log("good", good);
+          var arrayG = app.globalData.needArray;
+          var arrayI = this.data.needArray;
+          var save = false;
+          let p1 = new Promise(
+            (resolve, reject) => {
+              if (arrayG.length !== 0) {//全局数组中存在缓存数据
+                console.log("quanju")
+                var j = 0;
+                for (var i = 0; i < arrayG.length; i++) {//检查要添加的元素是否存在重复
+                  j = j + 1;
+                  if (arrayG[i].title == good.title && arrayG[i].message == good.message) {
+                    console.log("重复")
+                    j = j - 1;
+                    break;
+                  }
+                  if (j == arrayG.length) {//可以存入 save = true
+                    console.log("可以存入")
+                    save = true;
+                    resolve("ok")
+                  }
+                }
+                resolve("ok")
+              } else {//全局数组中bu存在缓存数据
+                var arrayS = wx.getStorageSync("needArray");
+
+                if (arrayS.length !== 0) {//本地存储有数据
+                  console.log("bendi")
+                  //循环遍历存储
+                  var j = 0;
+                  for (var i = 0; i < arrayS.length; i++) {//检查要添加的元素是否存在重复
+                    j = j + 1;
+                    if (arrayS[i].title == good.title && arrayS[i].message == good.message) {
+                      console.log("重复")
+                      i = j - 1;
+                      break;
+                    }
+                    if (j == arrayS.length) {//可以存入 save = true
+                      console.log("可以存入")
+                      save = true;
+                      resolve("ok")
+                    }
+                  }
+                } else {//本地存储没有数据
+                  //网上调数据
+                  console.log("wangluo")
+                  var list = Bmob.Object.extend("addGoods");
+                  var query = new Bmob.Query(list);
+                  query.limit(1000);
+                  query.find({
+                    success: function (res) {
+                      console.log("res", res)
+                      var j = 0;
+                      if (res.length == 0) {
+                        save = true;
+                        resolve("ok")
+                      } else {
+                        for (var i = 0; i < res.length; i++) {//检查要添加的元素是否存在重复
+                          j = j + 1;
+                          if (res[i].attributes.title == good.title && res[i].attributes.message == good.message) {
+                            console.log("重复")
+                            j = j - 1;
+                            break;
+                          }
+                          console.log(j)
+                          if (j == res.length) {//可以存入 save = true
+                            console.log("可以存入")
+                            save = true;
+                            resolve("ok")
+                          }
+                        }
+                      }
+                      // resolve("ok")
+                    }
+                  })
+                }
+              }
+            }
+          );
+
+          p1.then(function (resolve) {
+            console.log("jin")
+            if (save) {
+              console.log("save")
+              var Diary = Bmob.Object.extend("addGoods");
+              var diary = new Diary();
+              diary.set("title", good.title);
+              diary.set("message", good.message);
+              diary.set("buyingPrices", good.buyingPrices);
+              diary.set("bNumber", good.bNumber);
+              diary.set("buyingPrice", good.buyingPrice);
+              diary.set("Btime", good.Btime);
+              diary.set("merchant", good.merchant);
+              diary.set("phone", good.phone);
+              diary.set("class", good.class);
+              diary.set("isHiden", good.isHiden);
+              diary.save(null, {
+                success: function (result) {
+                  // 添加成功，返回成功之后的objectId（注意：返回的属性名字是id，不是objectId），你还可以在Bmob的Web管理后台看到对应的数据
+                  console.log("日记创建成功, objectId:" + result.id);
+                  good["id"] = result.id;
+                  app.globalData.needArray.push(good)
+                  wx.setStorage({
+                    key: 'needArray',
+                    data: app.globalData.needArray,
+                  })
+                },
+                error: function (result, error) {
+                  // 添加失败
+                  console.log('创建日记失败', result, error);
+                }
+              });
+
+            }
+          })
+          console.log("end")
+        }
+      }
+    }
+  },
+
   //打开商品详细页面
   clickToDetialView: function (e) {
     var hide = this.data.isHidenDetial;
-    if (hide) {
+    var hideS = this.data.isHidenPrice;
+    if (!hideS) {
+      if (hide) {
+        this.setData({
+          isHidenDetial: false
+        })
+      } else {
+        this.setData({
+          isHidenDetial: true
+        })
+      };
+      var array = e.currentTarget.dataset.goods;
       this.setData({
-        isHidenDetial: false
+        detailViewArray: array
       })
-    } else {
-      this.setData({
-        isHidenDetial: true
-      })
-    };
-    var array = e.currentTarget.dataset.goods;
-    this.setData({
-      detailViewArray:array
-    })
+    }
   },
+
+  //点击详情页面 关闭
   closeView: function () {
     this.setData({
       isHidenDetial: true
@@ -159,6 +306,19 @@ Page({
         })
       }
     }
+  },
+
+  //转到设置页面
+  tapToSet: function () {
+    wx.navigateTo({
+      url: '../set/set',
+    })
+  },
+  //转到缺货页面
+  tapToNeed: function () {
+    wx.navigateTo({
+      url: '../need/need',
+    })
   },
 
   //改变类分数据
@@ -277,6 +437,7 @@ Page({
   },
   down: function () {
     var numc = this.data.classNum;
+    console.log("numc", numc)
     if (numc < (this.data.classLength - 1)) {
       var numcl = this.data.classNum + 1;
       this.setData({

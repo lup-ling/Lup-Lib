@@ -21,6 +21,18 @@
           <view class='picker'>{{arrayClass[index2].class}}</view>
         </picker>
       </view>
+      <view class='blockView_1'>
+        <view class='title_1'>添加区:</view>
+        <input class='pickView' bindblur='finishWrite' data-text='category'></input>
+        <view class='title_1'>添加类:</view>
+        <input class='pickView' bindblur='finishWrite' data-text='class'></input>
+      </view>
+      <view class='blockView_1'>
+        <view class='title_1'>区ID:</view>
+        <input class='pickView' bindblur='finishWrite' data-text='cateID'></input>
+        <view class='title_1'>类ID:</view>
+        <input class='pickView' bindblur='finishWrite' data-text='classID'></input>
+      </view>
     </view>
   </view>
 
