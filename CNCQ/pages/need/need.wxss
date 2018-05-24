@@ -108,12 +108,13 @@
   margin-left: 63%;
   margin-top: 10rpx;
 
+  border: 2rpx solid #ECECEC;
   border-radius: 25rpx;
 
   font-size: 30rpx;
 
-  color: #0075EC;
-  background-color: gold;
+  color: #FFFBE6;
+  background-color: #9DDDFC;
 }
 .price {
   width: 25%;

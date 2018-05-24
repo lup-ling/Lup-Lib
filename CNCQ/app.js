@@ -42,6 +42,9 @@ App({
     detailData:{},
     needArray:[],
     num: 1,
-    screct:0
+    screct:0,
+    historyArray:[],//chart页面所需数组
+    title_H:"",
+    message_H: "",
   },
 })

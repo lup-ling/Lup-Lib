@@ -16,7 +16,24 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  
+    var that = this;
+    var list = Bmob.Object.extend("addGoods");
+    var query = new Bmob.Query(list);
+    var array2 = [];
+    query.find({
+      success: function (res) {
+        for (var i = 0; i < res.length; i++) {
+          var obj = res[i].attributes;
+          obj["id"] = res[i].id;
+          array2.push(obj)
+        }
+        that.setData({
+          needArray: array2
+        })
+        wx.setStorageSync("needArray", array2)
+        app.globalData.needArray = array2;
+      }
+    })
   },
 
   /**

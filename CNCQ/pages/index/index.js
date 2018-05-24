@@ -86,7 +86,7 @@ Page({
     
   },
 
-  //展开分类列表
+  //展开大分类列表
   showList: function () {
     var hide = this.data.isHidenList;
     if (hide) {
@@ -100,7 +100,25 @@ Page({
     }
   },
 
-  //手指刚放到屏幕触发
+  //改变当前页面数据到其他大类的数据
+  turnToOtherClass: function (e) {
+    var hArray = app.globalData.huobiaoData;
+    for (var i = 0; i < hArray.length; i++) {
+      if (e.currentTarget.dataset.classname == hArray[i].category) {
+        this.setData({
+          detailArray: hArray[i].classArray[0].goodArray,
+          classArray: hArray[i].classArray,
+          className: hArray[i].classArray[0].class,
+          scrollTop: 0,
+          isHidenDetial: true,
+          cateNum: i,
+          classLength: hArray[i].classArray.length
+        })
+      }
+    }
+  },
+
+  //滑动添加事件
   moveS: function (e) {
     if (!this.data.isHidenPrice) {
       //判断是否只有一个触摸点
@@ -290,47 +308,16 @@ Page({
     })
   },
 
-  //改变当前页面数据到其他大类的数据
-  turnToOtherClass: function (e) {
-    var hArray = app.globalData.huobiaoData;
-    for (var i = 0; i < hArray.length; i++) {
-      if (e.currentTarget.dataset.classname == hArray[i].category) {
-        this.setData ({
-          detailArray: hArray[i].classArray[0].goodArray,
-          classArray: hArray[i].classArray,
-          className: hArray[i].classArray[0].class,
-          scrollTop:0,
-          isHidenDetial: true,
-          cateNum:i,
-          classLength: hArray[i].classArray.length
-        })
-      }
-    }
-  },
-
-  //转到设置页面
-  tapToSet: function () {
-    wx.navigateTo({
-      url: '../set/set',
-    })
-  },
-  //转到缺货页面
-  tapToNeed: function () {
-    wx.navigateTo({
-      url: '../need/need',
-    })
-  },
-
-  //改变类分数据
+  //改变分类数据class
   changeClass: function (e) {
     console.log("e", e.currentTarget.dataset.classid)
     var classID = e.currentTarget.dataset.classid;
     var array = this.data.classArray;
     for (var i = 0; i < array.length; i++) {
-      if ( classID == array[i].classID) {
+      if (classID == array[i].classID) {
         this.setData({
           isHidenDetial: true,
-          classNum:i,
+          classNum: i,
           detailArray: array[i].goodArray,
           className: array[i].class,
           classLength: array.length
@@ -338,6 +325,7 @@ Page({
       }
     }
   },
+
   //展开或隐藏右侧跳转按钮栏
   hideOrShow: function () {
     var hide = this.data.isHiden;
@@ -346,7 +334,7 @@ Page({
       this.setData({
         isHidenDetial: true
       })
-    }else {
+    } else {
       if (hide) {
         this.setData({
           isHiden: false
@@ -359,6 +347,21 @@ Page({
     }
   },
 
+  //转到设置页面
+  tapToSet: function () {
+    wx.navigateTo({
+      url: '../set/set',
+    })
+  },
+
+  //转到缺货页面
+  tapToNeed: function () {
+    wx.navigateTo({
+      url: '../need/need',
+    })
+  },
+
+  // 跳转到编辑页面add.js
   alter:function (e) {
     app.globalData.isAlter = true;
     this.setData({
@@ -394,6 +397,18 @@ Page({
     })
   },
 
+  // 跳转到历史页面chart.j's
+  chart:function (e) {
+    console.log("chart", e.currentTarget.dataset.object)
+    app.globalData.historyArray = e.currentTarget.dataset.object;
+    app.globalData.title_H = e.currentTarget.dataset.title;
+    app.globalData.message_H = e.currentTarget.dataset.message;
+    wx.navigateTo({
+      url: '../chart/chart',
+    })
+  },
+
+  // 跳转到编辑页面add.js
   addData:function () {
     this.setData({
       isHidenDetial: true,
@@ -403,6 +418,7 @@ Page({
     })
   },
 
+  // 刷新数据
   refresh:function () {
     var that = this;//promise 里不能直接使用this 
     var num = this.data.cateNum;
@@ -424,6 +440,8 @@ Page({
       })
     })
   },
+
+  // 向上翻页
   up:function () {
     var numc = this.data.classNum;
     if (numc !== 0 && numc > 0) {
@@ -435,6 +453,8 @@ Page({
       })
     }
   },
+
+  // 向下翻页
   down: function () {
     var numc = this.data.classNum;
     console.log("numc", numc)
@@ -447,4 +467,59 @@ Page({
       })
     }
   },
+
+  //添加数据history
+  test1:function() {
+    var array = wx.getStorageSync("res")
+    console.log("huobiao11",array)
+    var Diary = Bmob.Object.extend("huobiao");
+    var query = new Bmob.Query(Diary);
+    var arraytt = [];
+    for (var i = 0; i < array.length; i++) {
+      var idc = array[i].objectId;
+      console.log("idc", idc)
+      var obj = {}
+      var a = {}
+      obj["title"] = array[i].title;
+      obj["message"] = array[i].message;
+      obj["Btime"] = array[i].Btime;
+      obj["buyingPrice"] = array[i].buyingPrice;
+      obj["buyingPrices"] = array[i].buyingPrices;
+      obj["bNumber"] = array[i].bNumber;
+      obj["merchant"] = array[i].merchant;
+      obj["objectID"] = idc;
+      obj["phone"] = array[i].phone;
+      var array1 = []
+      array1.push(obj)
+      a["a1"] = array1
+      arraytt.push(a)
+      
+    }
+    console.log("array", arraytt)
+
+    for (var i = 0; i < arraytt.length; i++) {
+      query.get(arraytt[i].a1[0].objectID, {
+        success: function (result) {
+          console.log("result", result)
+          var obj = {}
+          obj["title"] = result.attributes.title;
+          obj["message"] = result.attributes.message;
+          obj["Btime"] = result.attributes.Btime;
+          obj["buyingPrice"] = result.attributes.buyingPrice;
+          obj["buyingPrices"] = result.attributes.buyingPrices;
+          obj["bNumber"] = result.attributes.bNumber;
+          obj["merchant"] = result.attributes.merchant;
+          obj["objectID"] = result.id;
+          obj["phone"] = result.attributes.phone;
+          var array1 = []
+          array1.push(obj)
+          // var arrat = []
+          // arrat.push(array)
+          console.log("a", array1)
+          result.set("history", array1)
+          result.save()
+        }
+      })
+    }
+  }
 })

@@ -94,6 +94,9 @@
   <view class='alter' bindtap='alter' data-object='{{detailViewArray.objectID}}'>
     <image class='addIcon_alter' mode='aspectFit' src='../../resource/alter.png'></image>
   </view>
+  <view class='chart' bindtap='chart' data-object='{{detailViewArray.history}}' data-title='{{detailViewArray.title}}' data-message='{{detailViewArray.message}}'>
+    <image class='addIcon_chart' mode='aspectFit' src='../../resource/history.png'></image>
+  </view>
 </view>
 
 <!--跳转 按钮  -->
@@ -125,3 +128,7 @@
 <view class='downView' bindtap='down'> 
   <image class='addIcon' mode='aspectFit' src='../../resource/down.png'></image>
 </view>
+
+<!-- <view class='test1' bindtap='test1'> 
+  <image class='addIcon' mode='aspectFit' src='../../resource/down.png'></image>
+</view> -->

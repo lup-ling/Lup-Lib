@@ -23,6 +23,30 @@ module.exports = {
   formatTime: formatTime
 }
 
+//对象排序
+// function rankArray(Array,obje) {
+//   var array = Array;
+//   var newArray = [];
+//   for (var i = 0; i < array.length; i++) {//1,3,12,14,5,7,21
+//     var a = array[i][obje];
+//     var a1 = array[i];
+//     for (var j = i + 1; j < array.length; j++) {
+//       var b = array[j][obje];
+//       var b1 = array[j];
+//       if (a > b) {
+//         var c = a1;
+//         array[j] = c;
+//         array[i] = b1;
+//       }
+//       console.log("aaa",array)
+//     }
+//   }
+//   return array
+// }
+// module.exports = {
+//   rankArray: rankArray
+// }
+
 //封装数组排重
 function surplusless (array) {
   //获取class分类数组
@@ -150,7 +174,6 @@ function by(name, minor) {
         }else {
           return c < d ? -1 : 1;
         }
-        
       }
       return typeof a < typeof b ? -1 : 1;
     } else {
@@ -167,21 +190,25 @@ function myAsyncFunction(listName) {
     query.limit(1000);
     query.find({
       success :function (res) {
-        
         var objec = {};
         //1.获取全部数据，存入resArray中
         var resArray = [];
         var categoryArray = [];//categoryArray中包含cateID，category两项 需要return
-        var array1 = [];//categoryArray的临时数组       
+        var array1 = [];//categoryArray的临时数组 
+        var arrayT = [];//存入原始res数据
         for (var i = 0; i < res.length; i++) {
           //1.1获取categoryArray
           var obj1 = {};
           obj1["a"] = res[i].attributes.cateID;
           obj1["b"] = res[i].attributes.category;
           array1.push(obj1);
-
+          arrayT.push(res[i])
           resArray.push(res[i].attributes);
         }
+        wx.setStorage({
+          key: 'res',
+          data: res,
+        })
         categoryArray = surplusless1(array1, 'cateID', 'category');
         //2.转成json数据
         var huobiaoData = [];//创建大数组 需要return
@@ -189,7 +216,7 @@ function myAsyncFunction(listName) {
           var obj = {};
           obj["cateID"] = categoryArray[i].cateID;
           obj["category"] = categoryArray[i].category;
-          //2.2 获取classArray数组 
+          //2.2 获取classArray数组
           var classArray = [];//classArray中包含classID，class两项 需要return
           var array2 = [];//classArray的临时数组
           for (var j = 0; j < resArray.length; j++) {
@@ -210,8 +237,8 @@ function myAsyncFunction(listName) {
             var goodArray = [];
             for (var j = 0; j < resArray.length; j++) {
               if (resArray[j].classID == classArray[m].classID && resArray[j].cateID == categoryArray[i].cateID) {
-                var array1 = ['title', 'message', 'buyingPrices', 'bNumber', 'buyingPrice', 'salePrices', 'sNumber', 'salePrice', 'retailPrice', 'Btime', 'merchant', 'phone','objectID'];
-                var array2 = [resArray[j].title, resArray[j].message, resArray[j].buyingPrices, resArray[j].bNumber, resArray[j].buyingPrice, resArray[j].salePrices, resArray[j].sNumber, resArray[j].salePrice, resArray[j].retailPrice, resArray[j].Btime, resArray[j].merchant, resArray[j].phone, res[j].id];
+                var array1 = ['title', 'message', 'buyingPrices', 'bNumber', 'buyingPrice', 'salePrices', 'sNumber', 'salePrice', 'retailPrice', 'Btime', 'merchant', 'phone','objectID','history'];
+                var array2 = [resArray[j].title, resArray[j].message, resArray[j].buyingPrices, resArray[j].bNumber, resArray[j].buyingPrice, resArray[j].salePrices, resArray[j].sNumber, resArray[j].salePrice, resArray[j].retailPrice, resArray[j].Btime, resArray[j].merchant, resArray[j].phone, res[j].id, resArray[j].history];
                 //将goodmessage装入goodArray数组中
                 goodArray.push(putItemToArray(array1, array2))
               }

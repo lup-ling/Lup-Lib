@@ -1,0 +1,27 @@
+<!--pages/chart/chart.wxml-->
+<view class='bg'>
+  <view class='topView'>
+    <view class='text'>历史信息</view>
+  </view>
+  <canvas class='canvas' canvas-id='chart'></canvas>
+  <view class='title'>
+    <view class='block_1'>
+      <view class='text_1'>{{title}}</view>
+      <view class='text_2'>{{message}}</view>
+    </view>
+  </view>
+  <scroll-view class='chartView' scroll-y>
+    <view class='item'  wx:for='{{history}}'>
+      <view class='full'></view>
+      <view class='block'>
+       <view class='prices'>总价：{{item.buyingPrices}}</view>
+       <view class='num'>数量：{{item.bNumber}}</view>
+       <view class='prices'>单价：{{item.buyingPrice}}</view>
+       <view class='merchant'>渠道：{{item.merchant}}</view>
+       <view class='phone'>电话：{{item.phone}}</view>
+       <view class='time'>进货时间：{{item.Btime}}</view>
+       <view class='order'>{{index}}</view>
+      </view>
+    </view>
+  </scroll-view>
+</view>

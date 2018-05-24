@@ -148,6 +148,7 @@ Page({
   
   },
 
+  //改变数据。保存数据 
   finishWrite: function (w) {
     var key = w.currentTarget.dataset.text;
     var value = w.detail.value;
@@ -166,6 +167,7 @@ Page({
     console.log(this.data.goodMessage)
   },
   
+  // 改变大分类
   changeCate:function (p) {
     console.log(p)
     var indexP = p.detail.value;
@@ -184,6 +186,7 @@ Page({
 
   },
 
+  //改变小分类
   changeClass: function (p) {
     console.log(p)
     var indexP = p.detail.value;
@@ -197,6 +200,7 @@ Page({
     console.log("message", this.data.goodMessage)
   },
 
+  //改变时间 
   changeTime:function (t) {
     console.log(t.detail.value)
     this.data.goodMessage["Btime"] = t.detail.value;
@@ -206,16 +210,19 @@ Page({
     
   },
 
+  // 保存数据。上传数据
   save: function () {
+    var that = this;
     var text = this.data.goodMessage;
     console.log("isAlter",app.globalData.isAlter)
-    if (app.globalData.isAlter) {
+    if (app.globalData.isAlter) {//编辑模式
       var Diary = Bmob.Object.extend("huobiao");
       var query = new Bmob.Query(Diary);
       var idc = this.data.goodMessage.objectID;
       console.log("save", idc)
       query.get(idc, {
         success: function (result) {
+          console.log("result",result)
           result.set("cateID", text.cateID);
           result.set("category", text.category);
           result.set("classID", text.classID);
@@ -232,7 +239,29 @@ Page({
           result.set("Btime", text.Btime);
           result.set("merchant", text.merchant);
           result.set("phone", text.phone);
-          
+          var detail = that.data.detailData
+          console.log("save detail",detail)
+          var obj = {};
+          obj["Btime"] = text.Btime;
+          obj["buyingPrice"] = text.buyingPrice;
+          obj["buyingPrices"] = text.buyingPrices;
+          obj["bNumber"] = text.bNumber;
+          obj["merchant"] = text.merchant;
+          obj["phone"] = text.phone;
+          var array1 = result.attributes.history;
+          var n = array1.length;
+          for (var i = 0; i < array1.length; i++) {
+            if (array1[i].Btime == text.Btime) {
+              array1.splice(i,1,obj);
+              n = n - 1;
+              console.log("==",n);
+            }
+            if ( i == (array1.length - 1) && n == array1.length) {
+              array1.push(obj);
+              console.log("!==", n);
+            }
+          }
+          result.set("history", array1);
           app.globalData.isAlter = false;
           console.log("alter")
           result.save();
@@ -244,10 +273,10 @@ Page({
           console.log("error")
         }
       });
-    }else {
+    }else {//添加模式
       // console.log(this.data.goodMessage)
       // console.log(this.data.goodMessage.title)
-      if (this.data.goodMessage.title !== undefined && this.data.goodMessage.title.length !== 0) {
+      if (this.data.goodMessage.title !== undefined && this.data.goodMessage.title.length !== 0 && this.data.goodMessage.buyingPrices !== undefined && this.data.goodMessage.buyingPrices.length !== 0) {
         var Diary = Bmob.Object.extend("huobiao");
         var diary = new Diary();
         diary.set("cateID", text.cateID);
@@ -266,6 +295,16 @@ Page({
         diary.set("Btime", text.Btime);
         diary.set("merchant", text.merchant);
         diary.set("phone", text.phone);
+        var obj = {};
+        obj["Btime"] = text.Btime;
+        obj["buyingPrice"] = text.buyingPrice;
+        obj["buyingPrices"] = text.buyingPrices;
+        obj["bNumber"] = text.bNumber;
+        obj["merchant"] = text.merchant;
+        obj["phone"] = text.phone;
+        var array1 = [];
+        array1.push(obj)
+        diary.set("history", array1);
         //添加数据，第一个入口参数是null
         diary.save(null, {
           success: function (result) {
@@ -285,6 +324,7 @@ Page({
     }
   },
 
+  // 删除数据
   del:function () {
     if (app.globalData.isAlter) {
       //删除操作

@@ -1,12 +1,16 @@
 <!--pages/set/set.wxml-->
-<view class='setView'>
+<view class='loginView'>
   <view class='name'>登陆:</view>
   <input class='write' type='number' placeholder='请输入权限密码' maxlength='8' bindblur='writePassWord'></input>
-  <view class='enter'>确认</view>
+  <view class='enter' bindtap='enter'>确认</view>
 </view>
-<!-- 
-<view class='setView'>
-  <view class='name'>登陆:</view>
-  <input class='write' type='number' placeholder='请输入权限密码' maxlength='8' bindblur='writePassWord'></input>
-  <view class='enter'>确认</view>
-</view> -->
+ 
+<view class='clearDataView' bindtap='clear'>
+  <view class='name_1'>清除本地数据</view>
+</view>
+
+<view class='message' hidden='{{isHidenM}}' bindtap='closeMessage'>
+  <view class='name_2'>{{show}}</view>
+</view>
+
+<!-- <view class='test' bindtap='test'></view> -->

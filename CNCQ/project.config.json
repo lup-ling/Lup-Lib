@@ -70,6 +70,12 @@
 					"name": "need",
 					"pathName": "pages/need/need",
 					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "chart",
+					"pathName": "pages/chart/chart",
+					"query": ""
 				}
 			]
 		}
